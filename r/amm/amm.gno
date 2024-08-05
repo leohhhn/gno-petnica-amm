@@ -44,13 +44,10 @@ func Swap() std.Coin {
 	sentUgnot := sentCoins.AmountOf("ugnot")
 
 	// Determine swap type
-	ugnotSwap := sentUgnot > 0 // true
-	ptnSwap := sentPtn > 0     // false
+	ugnotSwap := sentUgnot > 0
+	ptnSwap := sentPtn > 0
 
 	// Check if only one coin was sent
-	// X XOR Y => (X || Y) && !(X && Y)
-	// This simplifies to X != Y
-	// X = sentPtn > 0, Y = sentUgnot > 0
 	if ptnSwap == ugnotSwap {
 		panic("you must send only $ptn or only $ugnot to swap")
 	}
@@ -61,11 +58,6 @@ func Swap() std.Coin {
 	}
 
 	k := lpPtn * lpUgnot // current LP formula
-	// 1000 = 100ptn * 10ugnot
-	// 1000 = x ptn * 11 ugnot
-	// xptn = k / 11 ugnot
-	// out = lpPtn - xptn
-
 	caller := std.PrevRealm().Addr()
 
 	// Swapping ugnot for ptn
